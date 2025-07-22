@@ -1,94 +1,87 @@
-# Full Stack Application
+Frontend (Angular)
+Install Node.js (v20.19+ required)
 
-This project is a full-stack application built with Angular for the frontend and Spring Boot for the backend. It demonstrates a simple architecture where the frontend communicates with the backend to fetch and display data.
+bash
+Copy
+Edit
+nvm install 20.19
+nvm use 20.19
+Setup Angular CLI
 
-## Project Structure
+bash
+Copy
+Edit
+npm install -g @angular/cli
+Install Dependencies and Run
 
-```
-fullstack-app
-├── backend
-│   ├── src
-│   │   ├── main
-│   │   │   ├── java
-│   │   │   │   └── com
-│   │   │   │       └── example
-│   │   │   │           └── app
-│   │   │   │               ├── Application.java
-│   │   │   │               ├── controller
-│   │   │   │               │   └── SampleController.java
-│   │   │   │               └── service
-│   │   │   │                   └── SampleService.java
-│   │   │   └── resources
-│   │   │       ├── application.yml
-│   │   │       └── application-dev.yml
-│   │   └── test
-│   │       └── java
-│   │           └── com
-│   │               └── example
-│   │                   └── app
-│   │                       └── ApplicationTests.java
-│   └── pom.xml
-├── frontend
-│   ├── src
-│   │   ├── app
-│   │   │   ├── app.component.ts
-│   │   │   └── app.module.ts
-│   │   └── environments
-│   │       ├── environment.ts
-│   │       └── environment.prod.ts
-│   ├── angular.json
-│   ├── package.json
-│   └── tsconfig.json
-└── README.md
-```
+bash
+Copy
+Edit
+cd frontend
+npm install
+ng serve
+Exposed Port
 
-## Backend
+The frontend runs at: http://localhost:4200
 
-The backend is a Spring Boot application that serves as the API for the frontend. It includes:
+🔐 OAuth 2.0 Configuration
+Type	Value
+Grant Type	password
+Token Endpoint	/api/auth/getToken
 
-- **Application.java**: The main entry point of the application.
-- **SampleController.java**: Handles HTTP requests and returns sample data.
-- **SampleService.java**: Contains business logic for fetching data.
-- **application.yml**: Main configuration file for application properties.
-- **application-dev.yml**: Development-specific configurations.
-- **pom.xml**: Maven configuration file for managing dependencies.
+Username	user
+Password	password
+Token Type	Bearer
+Algorithm	HS256 (with 32-char symmetric key)
 
-## Frontend
+NO CLIENT REGISTERES SINCE IT IS A Resource Owner Password Credentials Grant
 
-The frontend is an Angular application that provides the user interface. It includes:
+ API Endpoints
+🔒 Authentication
+POST /api/auth/getToken
+Description: Issues an access token (JWT) for valid user credentials.
 
-- **app.component.ts**: The root component of the application.
-- **app.module.ts**: The root module that imports necessary modules and declares components.
-- **environment.ts**: Development environment variables.
-- **environment.prod.ts**: Production environment variables.
-- **angular.json**: Angular workspace configuration.
-- **package.json**: npm configuration file for managing dependencies.
-- **tsconfig.json**: TypeScript configuration file.
+Request (x-www-form-urlencoded):
 
-## Getting Started
 
-### Prerequisites
 
-- Java 11 or higher
-- Node.js and npm
-- Maven
+grant_type=password
+username=user
+password=password
+Sample Response:
 
-### Backend Setup
 
-1. Navigate to the `backend` directory.
-2. Run `mvn spring-boot:run` to start the Spring Boot application.
+{
+  "access_token": "<JWT>",
+  "token_type": "Bearer",
+  "expires_in": 3600
+}
+📦 Products
+GET /api/products
+Description: Returns all available insurance products. Requires a valid Bearer token.
 
-### Frontend Setup
+Request Header:
 
-1. Navigate to the `frontend` directory.
-2. Run `npm install` to install dependencies.
-3. Run `ng serve` to start the Angular application.
+Authorization: Bearer <access_token>
+Sample Response:
 
-### Accessing the Application
 
-- The Angular application will be available at `http://localhost:4200`.
-- The Spring Boot API will be available at `http://localhost:8080`.
 
-## License
+[
+  {
+    "id": "prod_001",
+    "name": "Premium Health Plan",
+    "type": "HEALTH",
+    "coverage": "Full medical + dental coverage including annual checkups...",
+    "price": 200.0
+  },
+  ...
+]
+✅ Todo / Improvements
+Store users & clients in DB
 
-This project is licensed under the MIT License.
+Refresh token support
+
+Role-based authorization
+
+Production-ready deployment

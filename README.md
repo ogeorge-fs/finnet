@@ -1,22 +1,22 @@
 Frontend (Angular)
-Install Node.js (v20.19+ required)
+Install Node.js (v16.20.2)
 
 bash
-Copy
-Edit
+
+
 nvm install 20.19
 nvm use 20.19
 Setup Angular CLI
 
 bash
-Copy
-Edit
+
+
 npm install -g @angular/cli
 Install Dependencies and Run
 
 bash
-Copy
-Edit
+
+
 cd frontend
 npm install
 ng serve
